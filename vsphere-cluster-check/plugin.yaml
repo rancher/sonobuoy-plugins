@@ -1,0 +1,36 @@
+config-map:
+  input.json: |
+    [
+      {
+        "meta": {
+          "name": "RKE2 version",
+          "description": "At this time only RKE and RKE2 >= v1.19.0 is supported.",
+          "type": "k8s_version"
+        },
+        "k8s_version": {
+          "version": "v1.22.8+rke2r1"
+        }
+      },
+      {
+        "meta": {
+          "name": "Kubernetes provider",
+          "description": "At this time not all providers supported.",
+          "type": "provider"
+        },
+        "provider": {
+          "in": [
+            "vsphere"
+          ]
+        }
+      }
+    ]
+sonobuoy-config:
+  driver: Job
+  plugin-name: vsphere-cluster-check
+  result-format: manual
+  skip-cleanup: true
+spec:
+  command:
+    - /requirements-check
+  image: sonobuoy/requirementscheck:v0.0.1
+  name: plugin
